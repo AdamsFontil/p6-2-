@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
+const generateId = () => Number((Math.random() * 1000000).toFixed(0))
+
 const App = () => {
   const dispatch = useDispatch()
   const anecdotes = useSelector(state => state)
@@ -12,7 +14,20 @@ const App = () => {
       type: 'VOTE',
       payload: { id }
     })
+  }
+  const addAnecdote = event => {
+    event.preventDefault()
+    const content = event.target.anecdote.value
+    event.target.anecdote.value = 'sent'
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      payload: {
+        content,
+        id: generateId(),
+        votes: 0
+      }
 
+    })
   }
 
   return (
@@ -28,11 +43,11 @@ const App = () => {
         </div>
       ))}
       <h2>create new</h2>
-      <form>
+      <form onSubmit={addAnecdote}>
         <div>
-          <input />
+          <input name='anecdote' />
         </div>
-        <button>create</button>
+        <button type='submit'>create</button>
       </form>
     </div>
   )

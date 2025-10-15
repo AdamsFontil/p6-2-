@@ -36,6 +36,12 @@ const reducer = (state = initialState, action) => {
       console.log('changed anecdotes', changedAnecdotes);
       return changedAnecdotes
     }
+    case 'NEW_ANECDOTE': {
+      console.log('action.payload', action.payload);
+      const newAnecdote = [...state, action.payload]
+      console.log('newAnecdote', newAnecdote);
+      return newAnecdote
+    }
   }
 
   return state
