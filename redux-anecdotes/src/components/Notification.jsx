@@ -11,6 +11,8 @@ const Notification = () => {
 
   console.log('message', message);
 
+  if (!message) return null
+
   return <div style={style}>{message}</div>
 }
 
