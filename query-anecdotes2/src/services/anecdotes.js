@@ -21,3 +21,16 @@ export const createAnecdote = async (anecdote) => {
   }
   return await response.json()
 }
+
+export const updateAnecdote = async (changedAnecdote) => {
+  const options = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(changedAnecdote)
+  }
+  console.log('changed anecdote received---', changedAnecdote);
+
+  const response = await fetch(`${baseUrl}/${changedAnecdote.id}`, options)
+  console.log('what is the response---', response);
+  return response.json()
+}
