@@ -7,9 +7,9 @@ const getAll = async () => {
     throw new Error ('Failed to fetch anecdotes')
   }
 
-  const data = await response.json
+  const data = await response.json()
   console.log('what is data from service', data);
-  return await response.json()
+  return data
 
 }
 const createNew = async (content) => {
