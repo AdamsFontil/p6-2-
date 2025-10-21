@@ -3,12 +3,12 @@ import anecdoteService from "../services/anecdotes";
 
 const anecdoteSlice = createSlice({
   name: 'anecdotes',
-  initialState: '',
+  initialState: [],
   reducers: {
     vote(state, action ) {
       console.log('what is payload', action.payload);
       console.log('state at start', state);
-      const id = action.payload
+      const id = action.payload.id
       const anecdoteToChange = state.find(n => n.id === id)
       console.log('target to change', anecdoteToChange);
       anecdoteToChange.votes += 1
@@ -42,6 +42,12 @@ export const appendAnecdote = (content) => {
   }
 }
 
+export const updateVoteOnServer = content => {
+  return async (dispatch) => {
+    const updateAnecdote = await anecdoteService.voteOnServer(content)
+    dispatch(anecdoteSlice.actions.vote(updateAnecdote))
+  }
+}
 
 
 export const { addAnecdote, vote } = anecdoteSlice.actions

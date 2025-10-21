@@ -1,0 +1,25 @@
+# Get all anecdotes
+GET http://localhost:3001/anecdotes
+Accept: application/json
+
+###
+
+# Create a new anecdote
+POST http://localhost:3001/anecdotes
+Content-Type: application/json
+
+{
+  "content": "This is a new anecdote from REST client2"
+}
+
+###
+
+# Update (vote) an anecdote
+PUT http://localhost:3001/anecdotes/47145
+Content-Type: application/json
+
+{
+  "id": "47145",
+  "content": "If it hurts, do it more often",
+  "votes": 3
+}

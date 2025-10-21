@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import { vote } from "../reducers/anecdoteReducer"
+import { updateVoteOnServer } from "../reducers/anecdoteReducer"
 import { addMessage, removeMessage } from "../reducers/messageReducer"
+
 
 const AnecdoteList = () => {
   const dispatch = useDispatch()
@@ -20,9 +21,9 @@ const anecdotes = useSelector(state => {
 
 
 
-    const handlevote = anecdote => {
+    const handlevote = async (anecdote) => {
     console.log('voting', anecdote.id)
-    dispatch(vote(anecdote.id))
+    dispatch(updateVoteOnServer(anecdote))
     console.log('what is anecdote', anecdote);
     dispatch(addMessage(`You voted ${anecdote.content}`))
     setTimeout(() => {

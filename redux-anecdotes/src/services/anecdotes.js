@@ -12,6 +12,8 @@ const getAll = async () => {
   return data
 
 }
+
+
 const createNew = async (content) => {
 
   const options = {
@@ -29,5 +31,29 @@ const createNew = async (content) => {
   return await response.json()
 }
 
+const voteOnServer = async (anecdote) => {
 
-export default { getAll, createNew }
+  console.log('what is anecdote from service', anecdote);
+  const updatedAnecdote = {
+    ...anecdote,
+    votes: anecdote.votes + 1
+  }
+
+  const options = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updatedAnecdote)
+  }
+  const response = await fetch(`${baseUrl}/${anecdote.id}`,options)
+
+  if (!response.ok) {
+    throw new Error ('Failed to update anecdote')
+  }
+
+  console.log('what is response', response);
+  return await response.json()
+}
+
+
+
+export default { getAll, createNew, voteOnServer }
