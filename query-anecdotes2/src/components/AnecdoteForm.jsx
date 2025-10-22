@@ -14,7 +14,24 @@ const { messageDispatch } = useContext(NotificationContext)
       const anecdotes = queryClient.getQueryData(['anecdotes'])
       console.log('what are anecdotes', anecdotes);
       queryClient.setQueryData(['anecdotes'], anecdotes.concat(newAnecdote))
+
+      messageDispatch({type: 'ADD_MESSAGE', payload: `successfully added '${newAnecdote.content}' to anecdotes`})
+      setTimeout(() => {
+      messageDispatch({type: 'REMOVE_MESSAGE'})
+    }, 5000)
     },
+    onError: (error) => {
+      console.log('what is error',error);
+      console.log('what is error',error.response);
+      console.log('what is error',error.message);
+      console.log('what is error',error.cause);
+      console.log('what is error',error.name);
+      messageDispatch({type: 'ADD_MESSAGE', payload: `error: ${error.message}`})
+      setTimeout(() => {
+      messageDispatch({type: 'REMOVE_MESSAGE'})
+    }, 5000)
+    }
+
   })
 
 
@@ -24,10 +41,6 @@ const { messageDispatch } = useContext(NotificationContext)
     event.target.anecdote.value = ''
     console.log('new anecdote', content)
     newAnecdoteMutation.mutate({content, votes: 0})
-    messageDispatch({type: 'ADD_MESSAGE', payload: `successfully added '${content}' to anecdotes`})
-    setTimeout(() => {
-      messageDispatch({type: 'REMOVE_MESSAGE'})
-    }, 5000)
   }
 
   return (
