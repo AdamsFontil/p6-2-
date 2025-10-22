@@ -3,10 +3,12 @@ import { getAnecdotes } from './services/anecdotes'
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 import { updateAnecdote } from './services/anecdotes'
+import { useContext } from 'react'
+import NotificationContext from './NotificationContext'
 
 const App = () => {
+  const { messageDispatch } = useContext(NotificationContext)
   const queryClient = useQueryClient()
-
 
   const updateAnecdoteMutation = useMutation({
     mutationFn: updateAnecdote,
@@ -20,13 +22,14 @@ const App = () => {
     }
   })
 
-
-
     const handleVote = (anecdote) => {
     console.log('unchanged anecdote', anecdote)
     const changedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
-
     updateAnecdoteMutation.mutate(changedAnecdote)
+    messageDispatch({type: 'ADD_MESSAGE', payload: `anecdote '${changedAnecdote.content}' voted`})
+    setTimeout(() => {
+      messageDispatch({type: 'REMOVE_MESSAGE'})
+    }, 5000);
   }
 
 
@@ -52,10 +55,10 @@ console.log('what are results', result);
 console.log('what are anecdotes', anecdotes);
 
 
+
   return (
     <div>
       <h3>Anecdote app</h3>
-
       <Notification />
       <AnecdoteForm />
 
